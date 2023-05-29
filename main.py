@@ -1,12 +1,11 @@
-"""Module for translate text"""
-from deep_translator import GoogleTranslator
+"""Modules for create interface, translate text and create sentences"""
+import streamlit as st
 
 
-def translate_text_to_en(text):
-    """Function translate text to English"""
-    return GoogleTranslator(source='auto', target='en').translate(text)
-
-
-def translate_text_to_ru(text):
-    """Function translate text to Russian"""
-    return GoogleTranslator(source='en', target='ru').translate(text)
+if __name__ == '__main__':
+    title = st.text_input('Введите свой текст:', 'Life of Brian')
+    count = st.slider('Выберите максимальное '
+                      'количество слов в предложении', 20, 400, 20)
+    if st.button('Начать'):
+        result = generate_ru_text(title, count)
+        st.write(result)
