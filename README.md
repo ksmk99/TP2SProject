@@ -14,4 +14,4 @@
 
 ---
 ### Пример работы приложения:
-![screen-gif](./WorkExample.gif)  
+![screen-gif](./work-example.gif)  
