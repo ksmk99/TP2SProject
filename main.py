@@ -4,13 +4,22 @@ from deep_translator import GoogleTranslator
 import streamlit as st
 
 
-if __name__ == '__main__':
-    title = st.text_input('Введите свой текст:', 'Life of Brian')
-    count = st.slider('Выберите максимальное '
-                      'количество слов в предложении', 20, 400, 20)
-    if st.button('Начать'):
-        result = generate_ru_text(title, count)
-        st.write(result)
+def translate_text_to_en(text):
+    """Function translate text to English"""
+    return GoogleTranslator(source='auto', target='en').translate(text)
+
+
+def translate_text_to_ru(text):
+    """Function translate text to Russian"""
+    return GoogleTranslator(source='en', target='ru').translate(text)
+
+
+def generate_en_text(text, length):
+    """Function generate English text"""
+    generator = pipeline('text-generation', model='gpt2')
+    set_seed(42)
+    txt = generator(text, max_length=length,
+                    num_return_sequences=1)[0]['generated_text']
 
     return txt
 
@@ -24,12 +33,10 @@ def generate_ru_text(text, length):
     return generated_ru_text
 
 
-
-def translate_text_to_en(text):
-    """Function translate text to English"""
-    return GoogleTranslator(source='auto', target='en').translate(text)
-
-
-def translate_text_to_ru(text):
-    """Function translate text to Russian"""
-    return GoogleTranslator(source='en', target='ru').translate(text)
+if __name__ == '__main__':
+    title = st.text_input('Введите свой текст:', 'Life of Brian')
+    count = st.slider('Выберите максимальное '
+                      'количество слов в предложении', 20, 400, 20)
+    if st.button('Начать'):
+        result = generate_ru_text(title, count)
+        st.write(result)
